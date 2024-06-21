@@ -37,10 +37,13 @@ func printGame(firstNumber int, secondNumber int, subtraction int, answer int) {
 	// take them through the game
 
 	fmt.Println("Multiply your number by", firstNumber, prompt)
+	reader.ReadString('\n')
 
 	fmt.Println("Now multiply the result by", secondNumber, prompt)
+	reader.ReadString('\n')
 
 	fmt.Println("Divide the result by the number you originally thought of", prompt)
+	reader.ReadString('\n')
 
 	fmt.Println("Now subtract", subtraction, prompt)
 	reader.ReadString('\n')
