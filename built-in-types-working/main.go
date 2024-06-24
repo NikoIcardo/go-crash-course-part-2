@@ -1,29 +1,25 @@
 package main
 
-import "log"
-
-var myInt int
-var myUint uint
-var myFloat float32
-var myFloat64 float64
+import "fmt"
 
 func main() {
-	myInt = 10
-	myUint = 20
-	myFloat = 10.1
-	myFloat64 = 100.1
+	x := 10
 
-	log.Println(myInt, myUint, myFloat, myFloat64)
+	myFirstPointer := &x
 
-	// strings are immutable
-	myString := "Trevor"
+	fmt.Println("x is", x)
 
-	log.Println(myString)
+	fmt.Println("myFirstPointer is", myFirstPointer)
 
-	// this creates a brand new string
-	myString = "John"
+	*myFirstPointer = 15
 
-	var myBool = true
+	fmt.Println("x is now", x)
 
-	log.Println(myBool)
+	changeValueOfPointer(&x)
+
+	fmt.Println("After function call x is ", x)
+}
+
+func changeValueOfPointer(num *int) {
+	*num = 25
 }
