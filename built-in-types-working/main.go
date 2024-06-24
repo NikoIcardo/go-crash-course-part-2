@@ -1,25 +1,45 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 func main() {
-	x := 10
+	var animals []string
 
-	myFirstPointer := &x
+	animals = append(animals, "dog")
+	animals = append(animals, "fish")
+	animals = append(animals, "cat")
+	animals = append(animals, "horse")
 
-	fmt.Println("x is", x)
+	fmt.Println(animals)
 
-	fmt.Println("myFirstPointer is", myFirstPointer)
+	for i, x := range animals {
+		fmt.Println(i, x)
+	}
 
-	*myFirstPointer = 15
+	fmt.Println("Element 0 is ", animals[0])
 
-	fmt.Println("x is now", x)
+	fmt.Println("First two elements are ", animals[0:2])
 
-	changeValueOfPointer(&x)
+	fmt.Println("The slice is", len(animals), "elements long")
 
-	fmt.Println("After function call x is ", x)
+	fmt.Println("Is it sorted?", sort.StringsAreSorted(animals))
+
+	sort.Strings(animals)
+
+	fmt.Println("Is it sorted", sort.StringsAreSorted(animals))
+
+	animals = DeleteFromSlice(animals, 1)
+
+	fmt.Println(animals)
 }
 
-func changeValueOfPointer(num *int) {
-	*num = 25
+func DeleteFromSlice(a []string, i int) []string {
+	a[i] = a[len(a)-1]
+	a[len(a)-1] = ""
+	a = a[:len(a)-1]
+
+	return a
 }
