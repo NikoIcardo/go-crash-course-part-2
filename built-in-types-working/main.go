@@ -1,46 +1,41 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
 
-type Animal struct {
-	Name         string
-	Sound        string
-	NumberOfLegs int
-}
+	"github.com/eiannone/keyboard"
+)
 
-func (a *Animal) Says() {
-	fmt.Printf("A %s says %s", a.Name, a.Sound)
-	fmt.Println()
-}
-
-func (a *Animal) HowManyLegs() {
-	fmt.Printf("A %s has %d legs", a.Name, a.NumberOfLegs)
-	fmt.Println()
-}
+var keyPressChan chan rune
 
 func main() {
-	var dog Animal
-	dog.Name = "dog"
-	dog.Sound = "woof"
+	keyPressChan = make(chan rune)
 
-	dog.Says()
+	go listenForKeyPress()
 
-	cat := Animal{
-		Name:         "cat",
-		Sound:        "meow",
-		NumberOfLegs: 4,
+	fmt.Println(" Press any key, or q to quit")
+
+	_ = keyboard.Open()
+
+	defer func() {
+		keyboard.Close()
+	}()
+
+	for {
+		char, _, _ := keyboard.GetSingleKey()
+
+		if char == 'q' || char == 'Q' {
+			break
+		}
+
+		keyPressChan <- char
 	}
-
-	cat.Says()
-	cat.HowManyLegs()
 }
 
-func sumMany(nums ...int) int {
-	total := 0
+func listenForKeyPress() {
+	for {
+		key := <-keyPressChan
 
-	for _, x := range nums {
-		total = total + x
+		fmt.Println("You pressed", string(key))
 	}
-
-	return total
 }
